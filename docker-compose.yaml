@@ -2,13 +2,15 @@ version: "3.8"
 
 services:
   manager:
-    image: jibby/game-server-manager:0.1
+    build: manager
+    image: jibby/game-server-manager
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
 
   list:
-    image: jibby/game-server-list:0.1
+    build: list
+    image: jibby/game-server-list
     tty: true
 
   proxy:
