@@ -1,6 +1,8 @@
 [submodule "list"]
 	path = list
 	url = https://github.com/Jibbajabbafic/Game-Server-List.git
+	branch = main
 [submodule "manager"]
 	path = manager
 	url = https://github.com/Jibby-Games/Flappy-Game-Manager.git
+	branch = main
