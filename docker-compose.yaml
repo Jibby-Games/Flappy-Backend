@@ -12,6 +12,8 @@ services:
     build: list
     image: jibby/game-server-list
     tty: true
+    environment:
+      - IP_SOURCE=XRealIp
 
   proxy:
     image: nginx:1.23-alpine-slim
