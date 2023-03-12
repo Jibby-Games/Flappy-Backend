@@ -2,15 +2,13 @@ version: "3.8"
 
 services:
   manager:
-    build: manager
-    image: jibby/game-server-manager
+    image: jibby/game-server-manager:main
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
 
   list:
-    build: list
-    image: jibby/game-server-list
+    image: jibby/game-server-list:main
     tty: true
     environment:
       - IP_SOURCE=XRealIp
@@ -27,3 +25,9 @@ services:
     depends_on:
       - manager
       - list
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    command: --cleanup --interval 60
