@@ -2,18 +2,21 @@ version: "3.8"
 
 services:
   manager:
+    container_name: manager
     image: jibby/game-server-manager:main
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
 
   list:
+    container_name: list
     image: jibby/game-server-list:main
     tty: true
     environment:
       - IP_SOURCE=XRealIp
 
   proxy:
+    container_name: proxy
     image: nginx:1.23-alpine-slim
     volumes:
       - type: bind
@@ -27,7 +30,8 @@ services:
       - list
 
   watchtower:
+    container_name: watchtower
     image: containrrr/watchtower
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    command: --cleanup --interval 60
+    command: --cleanup --interval 60 manager list proxy watchtower
