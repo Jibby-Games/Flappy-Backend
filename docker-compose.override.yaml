@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  manager:
+    build: manager
+    volumes:
+      - ./manager/app:/app
+    command: [ "--reload", "--reload-dir", "./app" ]
+
+  list:
+    build: list

@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  manager:
+    image: jibby/game-server-manager:main
+    restart: always
+
+  list:
+    image: jibby/game-server-list:main
+    restart: always
+
+  proxy:
+    restart: always
+
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    command: --cleanup --interval 60 manager list proxy watchtower
+    depends_on:
+      - manager
+      - list
+      - proxy
