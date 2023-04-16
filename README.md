@@ -17,6 +17,6 @@ Use `docker compose up` to build and run the services using the local code in th
 without Watchtower auto updating images.
 ## Production
 Use the `./start-prod.sh` and `./stop-prod.sh` scripts to start and stop the services on production servers
-which includes some extra such as auto restarting containers and pulling docker images from DockerHub with Watchtower to keep them updated.
+which includes some extras such as auto restarting containers and pulling docker images from DockerHub with Watchtower to keep them updated.
 
 You can use `./reload-nginx.sh` to update the nginx config without any downtime.
