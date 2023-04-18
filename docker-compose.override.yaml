@@ -9,3 +9,7 @@ services:
 
   list:
     build: list
+
+  proxy:
+    environment:
+      - USE_LOCAL_CA=1
