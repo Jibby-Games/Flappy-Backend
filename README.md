@@ -16,8 +16,8 @@ Ensure all submodules are cloned and updates using `git pull --recurse-submodule
 Use `docker compose up` to build and run the services using the local code in the submodule repos,
 without Watchtower auto updating images.
 
-To get HTTPS to work correctly add jibby.localhost to your hosts file to point at 127.0.0.1 and add the local CA
-from the proxy service container's files (file to add is `/etc/local_ca/caCert.pem`).
+To get HTTPS to work correctly locally add jibby.localhost to your hosts file to point at 127.0.0.1 and add the local CA
+from the proxy service container's files (the file to add is `/etc/local_ca/caCert.pem`).
 ## Production
 Use the `./start-prod.sh` and `./stop-prod.sh` scripts to start and stop the services on production servers
 which includes some extras such as auto restarting containers and pulling docker images from DockerHub with Watchtower to keep them updated.
