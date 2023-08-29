@@ -5,6 +5,8 @@
 		}
 	],
 	"settings": {
-		"python.formatting.provider": "black"
+		"[python]": {
+			"editor.defaultFormatter": "ms-python.black-formatter"
+		}
 	}
 }
