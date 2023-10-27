@@ -15,7 +15,7 @@ services:
 
   proxy:
     container_name: proxy
-    image: jonasal/nginx-certbot:4.3.0-nginx1.25.2
+    build: proxy
     env_file:
       - ./proxy/.env
     volumes:
