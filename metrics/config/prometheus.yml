@@ -1,0 +1,15 @@
+global:
+  scrape_interval:     10s
+  evaluation_interval: 10s
+
+# Target the containers and ports from the docker compose file
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['node_exporter:9100']
+  - job_name: 'server_list'
+    static_configs:
+      - targets: ['list:3000']
