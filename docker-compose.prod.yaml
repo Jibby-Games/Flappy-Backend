@@ -18,7 +18,7 @@ services:
     restart: always
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    command: --cleanup --interval 60 manager list proxy watchtower
+    command: --cleanup --interval 60 manager list watchtower
     depends_on:
       - manager
       - list
