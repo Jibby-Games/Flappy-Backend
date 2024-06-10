@@ -7,9 +7,16 @@ These services can all be run using docker compose for convenience:
 - Server game manager (to host official game servers)
 - Watchtower (auto updates docker images)
 - Nginx with certbot (reverse proxy to route connections to services and keeps HTTPS certificates updated automatically)
+- Prometheus + Grafana (display server load and game metrics)
+    - Access the dashboard through port 3000 on your server e.g. http://localhost:3000
+
 ## Setup
+### Certbot Automatic HTTPS Certificates
 In order to support HTTPS a `./proxy/.env` file is needed with a valid email address which certbot can use to request certificates.
 Make a copy of the `.env.example` file in the `proxy` directory and rename it `.env` and add your email address to set the `CERTBOT_EMAIL` env var.
+
+### Grafana Metrics
+Setup admin access by going to the dashboard on http://localhost:3000 and then enter `admin` as username and password for the first time setup.
 
 ## Development
 Ensure all submodules are cloned and updates using `git pull --recurse-submodules`.
