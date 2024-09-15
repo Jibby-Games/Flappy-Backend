@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   manager:
     image: jibby/game-server-manager:main
