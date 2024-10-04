@@ -1,16 +1,19 @@
 services:
+  # Game Server Manager
   manager:
     container_name: manager
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
 
+  # Game Server List
   list:
     container_name: list
     tty: true
     environment:
       - IP_SOURCE=XRealIp
 
+  # Reverse Proxy
   proxy:
     container_name: proxy
     build: proxy
@@ -26,6 +29,7 @@ services:
       - manager
       - list
 
+  # Metrics Storage
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -42,6 +46,7 @@ services:
       - ./metrics/config:/etc/prometheus/
       - prometheus-data:/prometheus
 
+  # Metrics Viewer
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -51,6 +56,7 @@ services:
     ports:
       - 3000:3000
 
+  # System Metrics Source
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
     container_name: node_exporter
@@ -60,6 +66,18 @@ services:
     restart: unless-stopped
     volumes:
       - '/:/host:ro,rslave'
+
+  # Container Log Viewer
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dozzle/data:/data
+    ports:
+      - 8080:8080
+    environment:
+      DOZZLE_AUTH_PROVIDER: simple
 
 volumes:
   nginx_secrets: {}

@@ -1,0 +1,2 @@
+# To use Dozzle you must first generate the users.yml file by running:
+# docker run amir20/dozzle generate admin --password "YOUR PASSWORD" --name "YOUR NAME" > users.yml
