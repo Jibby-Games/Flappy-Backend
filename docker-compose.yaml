@@ -5,6 +5,8 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
+    env_file:
+      - ./manager/.env
 
   # Game Server List
   list:
