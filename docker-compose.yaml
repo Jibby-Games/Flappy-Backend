@@ -55,6 +55,10 @@ services:
     restart: unless-stopped
     volumes:
       - grafana-data:/var/lib/grafana
+      # Stores datasources and exported dashboards
+      - ./metrics/provisioning:/etc/grafana/provisioning:ro
+      # Optional config file
+      # - ./grafana.ini:/etc/grafana/grafana.ini:ro
     ports:
       - 3000:3000
 
