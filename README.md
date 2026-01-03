@@ -12,24 +12,26 @@ These services can all be run using docker compose for convenience:
 - Dozzle (docker container log viewer)
     - View logs through port 8080 on your server e.g. http://localhost:8080
 
-## Setup
-### Certbot Automatic HTTPS Certificates
-In order to support HTTPS a `./proxy/.env` file is needed with a valid email address which certbot can use to request certificates.
-Make a copy of the `.env.example` file in the `proxy` directory and rename it `.env` and add your email address to set the `CERTBOT_EMAIL` env var.
+## First Time Setup
 
-***Do not commit the .env file!***
+1. Copy the `.env.example` file to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
 
-### Grafana Metrics
-Setup admin access by going to the dashboard on http://localhost:3000 and then enter `admin` as username and password for the first time setup.
+2. Edit `.env` and configure the required values:
+   - `CERTBOT_EMAIL` - Your email for HTTPS certificate registration
+   - `DOZZLE_PASSWORD` - Password for the Dozzle log viewer
+   - `GRAFANA_ADMIN_PASSWORD` - Grafana admin password
 
-### Dozzle Log Viewer
-To use it you must first generate credential by running this command:
-```bash
-docker run amir20/dozzle generate admin --password "YOUR PASSWORD" > dozzle/data/users.yml
-```
-This will store the credentials in the `./dozzle/users.yml` file with the password hashed for security.
+   ***Do not commit the .env file!***
 
-***Do not commit the users.yml file!***
+3. Run the setup script to initialize the environment:
+   ```bash
+   ./setup.sh
+   ```
+
+The setup script will validate your configuration and automatically generate the Dozzle credentials file.
 ## Development
 Ensure all submodules are cloned and updates using `git pull --recurse-submodules`.
 Use `docker compose up` to build and run the services using the local code in the submodule repos,
@@ -42,3 +44,12 @@ Use the `./start-prod.sh` and `./stop-prod.sh` scripts to start and stop the ser
 which includes some extras such as auto restarting containers and pulling docker images from DockerHub with Watchtower to keep them updated.
 
 You can use `./reload-nginx.sh` to update the nginx config without any downtime.
+
+## Migration
+Files and directories to copy across:
+- `.env` - All user configuration
+- `proxy/user_conf.d/` - Custom NGINX settings
+
+Docker volumes to copy across:
+- `grafana-data` - Dashboards and configuration
+- `prometheus-data` - (Optional) historical data

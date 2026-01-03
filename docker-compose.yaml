@@ -5,8 +5,13 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
-    env_file:
-      - ./manager/.env
+    environment:
+      - DOCKER_USER=${GAME_MANAGER_DOCKER_USER:-jibby}
+      - DOCKER_REPO=${GAME_MANAGER_DOCKER_REPO:-flappyrace}
+      - SECRETS_VOLUME=${GAME_MANAGER_SECRETS_VOLUME:-flappy-backend_nginx_secrets}
+      - MAX_CONTAINER_RETRIES=${GAME_MANAGER_MAX_CONTAINER_RETRIES:-10}
+      - MAX_RUNNING_SERVERS=${GAME_MANAGER_MAX_RUNNING_SERVERS:-20}
+      - MAX_TAGS=${GAME_MANAGER_MAX_TAGS:-5}
 
   # Game Server List
   list:
@@ -19,14 +24,14 @@ services:
   proxy:
     container_name: proxy
     build: proxy
-    env_file:
-      - ./proxy/.env
     volumes:
       - nginx_secrets:/etc/letsencrypt
       - ./proxy/user_conf.d:/etc/nginx/user_conf.d:ro
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      - CERTBOT_EMAIL=${CERTBOT_EMAIL}
     depends_on:
       - manager
       - list
@@ -61,6 +66,8 @@ services:
       # - ./grafana.ini:/etc/grafana/grafana.ini:ro
     ports:
       - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
 
   # System Metrics Source
   node_exporter:
@@ -70,8 +77,6 @@ services:
       - '--path.rootfs=/host'
     pid: host
     restart: unless-stopped
-    volumes:
-      - '/:/host:ro,rslave'
 
   # Container Log Viewer
   dozzle:

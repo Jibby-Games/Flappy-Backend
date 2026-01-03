@@ -10,6 +10,10 @@ services:
   proxy:
     restart: always
 
+  node_exporter:
+    volumes:
+      - '/:/host:ro,rslave'
+
   watchtower:
     container_name: watchtower
     image: containrrr/watchtower
