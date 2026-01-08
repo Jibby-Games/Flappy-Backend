@@ -64,10 +64,9 @@ services:
       - ./metrics/provisioning:/etc/grafana/provisioning:ro
       # Optional config file
       # - ./grafana.ini:/etc/grafana/grafana.ini:ro
-    ports:
-      - 3000:3000
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+      - GF_SERVER_ROOT_URL=https://${HOST_DOMAIN:-localhost}/grafana/
 
   # System Metrics Source
   node_exporter:
@@ -86,10 +85,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./dozzle/data:/data
-    ports:
-      - 8080:8080
     environment:
       DOZZLE_AUTH_PROVIDER: simple
+      DOZZLE_BASE: /dozzle
 
 volumes:
   nginx_secrets: {}

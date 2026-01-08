@@ -30,8 +30,8 @@ if [ -z "$CERTBOT_EMAIL" ] || [ "$CERTBOT_EMAIL" = "your-email-address" ]; then
     MISSING_VARS="${MISSING_VARS}  - CERTBOT_EMAIL\n"
 fi
 
-if [ -z "$DOZZLE_PASSWORD" ] || [ "$DOZZLE_PASSWORD" = "your-secure-password" ]; then
-    MISSING_VARS="${MISSING_VARS}  - DOZZLE_PASSWORD\n"
+if [ -z "$DOZZLE_ADMIN_PASSWORD" ] || [ "$DOZZLE_ADMIN_PASSWORD" = "your-secure-password" ]; then
+    MISSING_VARS="${MISSING_VARS}  - DOZZLE_ADMIN_PASSWORD\n"
 fi
 
 if [ -z "$GRAFANA_ADMIN_PASSWORD" ] || [ "$GRAFANA_ADMIN_PASSWORD" = "your-secure-password" ]; then
@@ -54,7 +54,7 @@ mkdir -p dozzle/data
 # Generate Dozzle credentials
 echo ""
 echo "Generating Dozzle credentials..."
-docker run --rm amir20/dozzle generate admin --password "$DOZZLE_PASSWORD" > dozzle/data/users.yml
+docker run --rm amir20/dozzle generate admin --password "$DOZZLE_ADMIN_PASSWORD" > dozzle/data/users.yml
 
 if [ $? -eq 0 ]; then
     echo "✓ Dozzle credentials generated successfully"
@@ -71,6 +71,6 @@ echo "  - Development: docker compose up"
 echo "  - Production:  ./start-prod.sh"
 echo ""
 echo "Access points:"
-echo "  - Grafana:  http://localhost:3000 (user: admin)"
-echo "  - Dozzle:   http://localhost:8080 (user: admin)"
+echo "  - Grafana:  https://localhost/grafana/ (user: admin)"
+echo "  - Dozzle:   https://localhost/dozzle/ (user: admin)"
 echo ""

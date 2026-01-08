@@ -8,9 +8,9 @@ These services can all be run using docker compose for convenience:
 - Watchtower (auto updates docker images)
 - Nginx with certbot (reverse proxy to route connections to services and keeps HTTPS certificates updated automatically)
 - Prometheus + Grafana (display server load and game metrics)
-    - Access the dashboard through port 3000 on your server e.g. http://localhost:3000
+    - Access the dashboard at `/grafana/` on your server e.g. https://localhost/grafana/
 - Dozzle (docker container log viewer)
-    - View logs through port 8080 on your server e.g. http://localhost:8080
+    - View logs at `/dozzle/` on your server e.g. https://localhost/dozzle/
 
 ## First Time Setup
 
@@ -20,9 +20,10 @@ These services can all be run using docker compose for convenience:
    ```
 
 2. Edit `.env` and configure the required values:
+   - `HOST_DOMAIN` - Your website domain
    - `CERTBOT_EMAIL` - Your email for HTTPS certificate registration
-   - `DOZZLE_PASSWORD` - Password for the Dozzle log viewer
-   - `GRAFANA_ADMIN_PASSWORD` - Grafana admin password
+   - `DOZZLE_ADMIN_PASSWORD` - Password for the Dozzle log viewer
+   - `GRAFANA_ADMIN_PASSWORD` - Password for the Grafana dashboard
 
    ***Do not commit the .env file!***
 
