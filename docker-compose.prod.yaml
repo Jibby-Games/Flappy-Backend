@@ -13,15 +13,3 @@ services:
   node_exporter:
     volumes:
       - '/:/host:ro,rslave'
-
-  watchtower:
-    container_name: watchtower
-    image: containrrr/watchtower
-    restart: always
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    command: --cleanup --interval 60 manager list watchtower
-    depends_on:
-      - manager
-      - list
-      - proxy

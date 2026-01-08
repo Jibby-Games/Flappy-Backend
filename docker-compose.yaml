@@ -5,6 +5,9 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     tty: true
+    networks:
+      - frontend
+      - monitoring
     environment:
       - DOCKER_USER=${GAME_MANAGER_DOCKER_USER:-jibby}
       - DOCKER_REPO=${GAME_MANAGER_DOCKER_REPO:-flappyrace}
@@ -17,6 +20,9 @@ services:
   list:
     container_name: list
     tty: true
+    networks:
+      - frontend
+      - monitoring
     environment:
       - IP_SOURCE=XRealIp
 
@@ -30,6 +36,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    networks:
+      - frontend
+      - monitoring
     environment:
       - CERTBOT_EMAIL=${CERTBOT_EMAIL}
     depends_on:
@@ -41,6 +50,8 @@ services:
     image: prom/prometheus:latest
     container_name: prometheus
     restart: unless-stopped
+    networks:
+      - monitoring
     command:
       - '--storage.tsdb.retention.time=1y'
       - '--storage.tsdb.retention.size=4GB'
@@ -58,6 +69,9 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
+    networks:
+      - frontend
+      - monitoring
     volumes:
       - grafana-data:/var/lib/grafana
       # Stores datasources and exported dashboards
@@ -72,6 +86,8 @@ services:
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
     container_name: node_exporter
+    networks:
+      - monitoring
     command:
       - '--path.rootfs=/host'
     pid: host
@@ -82,6 +98,9 @@ services:
     image: amir20/dozzle:latest
     container_name: dozzle
     restart: unless-stopped
+    networks:
+      - frontend
+      - monitoring
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./dozzle/data:/data
@@ -93,3 +112,13 @@ volumes:
   nginx_secrets: {}
   prometheus-data: {}
   grafana-data: {}
+
+networks:
+  # Frontend network - Services accessible through the proxy
+  frontend:
+    driver: bridge
+    internal: false
+  # Monitoring network - Metrics collection and viewing (isolated from public)
+  monitoring:
+    driver: bridge
+    internal: true

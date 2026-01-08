@@ -5,7 +5,6 @@ the main server list (under `./list`) and the server game manager (under `./mana
 These services can all be run using docker compose for convenience:
 - Server list (to show games on the server browser)
 - Server game manager (to host official game servers)
-- Watchtower (auto updates docker images)
 - Nginx with certbot (reverse proxy to route connections to services and keeps HTTPS certificates updated automatically)
 - Prometheus + Grafana (display server load and game metrics)
     - Access the dashboard at `/grafana/` on your server e.g. https://localhost/grafana/
@@ -35,8 +34,7 @@ These services can all be run using docker compose for convenience:
 The setup script will validate your configuration and automatically generate the Dozzle credentials file.
 ## Development
 Ensure all submodules are cloned and updates using `git pull --recurse-submodules`.
-Use `docker compose up` to build and run the services using the local code in the submodule repos,
-without Watchtower auto updating images.
+Use `docker compose up` to build and run the services using the local code in the submodule repos.
 
 To get HTTPS to work correctly locally add jibby.localhost to your hosts file to point at 127.0.0.1 and add the local CA
 from the proxy service container's files (the file to add is `/etc/local_ca/caCert.pem`).
